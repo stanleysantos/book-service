@@ -80,7 +80,7 @@ public class BookController {
         var book = repository.findById(id).orElseThrow();
         Exchange exchange = proxy.getExchange(book.getPrice(), "USD", currency);
         book.setPrice(exchange.getConvertedValue());
-        book.setEnvironment(port + " FEIGN");
+        book.setEnvironment("Book Port: " + port + " Exchange Port: " + exchange.getEnvironment());
         book.setCurrency(currency);
         return book;
     }
