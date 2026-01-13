@@ -37,7 +37,12 @@ spring:
       hibernate:
     show-sql: false
     open-in-view: false
-springdoc:
+  management:
+    tracing:
+      sampling:
+        probability: 1.0
+# zipkin:
+#   base-url: http://localhost:9411
   api-docs:
     path: /book-service/v3/api-docs
   swagger-ui:
