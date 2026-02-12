@@ -7,6 +7,8 @@ import br.com.erudio.proxy.ExchangeProxy;
 import br.com.erudio.repository.BookRepository;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +24,8 @@ import java.util.HashMap;
 @RestController
 @RequestMapping("book-service")
 public class BookController {
+
+    private final Logger logger = LoggerFactory.getLogger(BookController.class);
 
     @Autowired
     private InstanceInformationService info;
@@ -80,6 +84,7 @@ public class BookController {
 
     public Book findBook(@PathVariable("id") Long id,
                          @PathVariable("currency") String currency) {
+        logger.info("findBook is called with -> {}, {}",id, currency);
         String port = info.retrieveServerPort();
         var book = repository.findById(id).orElseThrow();
         Exchange exchange = proxy.getExchange(book.getPrice(), "USD", currency);
